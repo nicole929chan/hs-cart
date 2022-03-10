@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import VShoppingCartContent from './VShoppingCartContent.vue';
 
-createApp(App).mount('#app')
+createApp(VShoppingCartContent).mount('#app');
