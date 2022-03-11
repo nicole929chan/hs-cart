@@ -1,7 +1,14 @@
 <template>
     <img alt="Vue logo" src="./assets/logo.png" />
-    <v-cart-top></v-cart-top>
-    <v-cart v-for="cart in carts" :key="cart.type" :data="cart"> </v-cart>
+    <v-cart-top :total="total"></v-cart-top>
+    <v-cart
+        v-for="cart in carts"
+        :key="cart.type"
+        :data="cart"
+        @remove="removeCart"
+        @increment="incrementTotal"
+    >
+    </v-cart>
 </template>
 
 <script>
@@ -19,6 +26,7 @@ export default {
         return {
             items: [],
             carts: [],
+            total: 0,
         };
     },
     mounted() {
@@ -53,6 +61,7 @@ export default {
             //     ]
             // }
             let currentType = 0;
+            let total = 0;
             this.items.forEach((item) => {
                 let cartType = parseInt(item.CartType);
                 if (cartType !== currentType) {
@@ -72,7 +81,21 @@ export default {
                 }
 
                 currentType = cartType;
+
+                total += parseInt(item.BargainPrice) * parseInt(item.Qty);
             });
+
+            this.incrementTotal(total);
+        },
+        incrementTotal(amount) {
+            this.total += amount;
+        },
+        removeCart(cartType) {
+            const newCarts = this.carts.filter(
+                (cart) => cart.type !== cartType
+            );
+
+            this.carts = newCarts;
         },
     },
 };
