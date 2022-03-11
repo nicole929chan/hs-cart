@@ -1,6 +1,7 @@
 <template>
     <img alt="Vue logo" src="./assets/logo.png" />
     <v-cart-top :total="total"></v-cart-top>
+    <button>確認結帳</button>
     <v-cart
         v-for="cart in carts"
         :key="cart.type"

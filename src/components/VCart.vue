@@ -1,13 +1,21 @@
 <template>
-    <div class="cart_content" style="border: 1px solid red">
-        <h1>{{ title }}</h1>
-        <v-cart-item
-            v-for="item in items"
-            :key="item.ProductID"
-            :data="item"
-            @removed="removeItem"
-        ></v-cart-item>
-        <h2>合計: ${{ subtotal }}</h2>
+    <div class="cart_content">
+        <div :style="flexBetween">
+            <div :style="flexDefault">
+                <h1 @click="display = !display">{{ title }}</h1>
+                <h2>$xxx免運</h2>
+                <h2>({{ items.length }})</h2>
+            </div>
+            <h2>NT${{ subtotal }}</h2>
+        </div>
+        <table v-show="display">
+            <v-cart-item
+                v-for="item in items"
+                :key="item.ProductID"
+                :data="item"
+                @removed="removeItem"
+            ></v-cart-item>
+        </table>
     </div>
 </template>
 
@@ -29,6 +37,14 @@ export default {
             title: this.data.title,
             items: this.data.items,
             subtotal: 0,
+            flexDefault: {
+                display: 'flex',
+            },
+            flexBetween: {
+                display: 'flex',
+                'justify-content': 'space-between',
+            },
+            display: false,
         };
     },
     mounted() {
